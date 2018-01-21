@@ -38,13 +38,11 @@ int main(int argc, char *argv[]) {
         char buf[100];
         wait(&status);
         read(pipefd[0],buf, sizeof(buf));
-        printf("Received: %s\n",buf);
-        //for (int i = 0; i < count; i++)printf("%d ", read(pipefd[0], info, sizeof(info)));
+        printf("%s\n",buf);
         close(pipefd[0]);
     }
     else { //child
         close(pipefd[0]);
-        //printf("SUP ");
         int pid = getpid();
         int ppid, count = 0, treeInPid[100];
         printf("%d ",pid);
@@ -68,12 +66,8 @@ int main(int argc, char *argv[]) {
           if(i != 0) strcat(tree,"-");
           fclose(f);
         }
-        printf("%s",tree);
-        /*for (int i = 0; i < count; i++)write(pipefd[1], treeInPid[i], sizeof(treeInPid[i]));
-        write(pipefd[1],count, sizeof(count));*/
-        //printf("SUP ");
-        //for (int i = 0; i < 4; i++)printf("%d ",treeInPid[i]);
-        write(pipefd[1], "Hello", sizeof("Hello"));
+        //printf("%s",tree);
+        write(pipefd[1], tree, sizeof(tree));
         close(pipefd[1]);
         exit(0);
     }
