@@ -50,10 +50,10 @@ int main(int argc, char *argv[]) {
     fclose(f);
   }
   mkfifo(myfifo, 0666);
-	fd = open(myfifo, O_WRONLY);
-	write(fd, tree, sizeof(tree));
+  fd = open(myfifo, O_WRONLY);
+  write(fd, tree, sizeof(tree));
   close(fd);
-	unlink(myfifo);
+  unlink(myfifo);
   return 0;
 
 }
