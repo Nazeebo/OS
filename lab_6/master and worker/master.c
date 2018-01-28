@@ -20,11 +20,11 @@ int main(int argc, char *argv[]) {
         fclose(fd);
         srand(time(NULL));
         for(i = 0; i < 6; i++){
-        	printf("%s/n",jokes[rand() % 6]);
+        	printf("%s\n",jokes[rand() % 6]);
         	sleep(0.5);
 		}
         wait(&status);
-        printf("%s","worker finished his job, the result lies in sorted.txt");
+        printf("%s\n","worker finished his job, the result lies in sorted.txt");
         exit(0);
     }
     else //child
