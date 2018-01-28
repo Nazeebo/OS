@@ -8,7 +8,6 @@
 
 int getPpid(int pid) {   //getting ppid of process with given pid
     char fname[40],buf[100];
-    char* myfifo = "/tmp/newfifo";
     sprintf(fname, "/proc/%d/status", pid);
     FILE *f = fopen(fname, "r");
     int ppid;
