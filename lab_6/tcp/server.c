@@ -1,34 +1,62 @@
 #include <netdb.h>
 #include <stdio.h>
-#include <arpa/inet.h>
+#include <arpa/inet.h> 
 #include <sys/socket.h>
 #include <unistd.h>
 #include <netinet/ip.h>
 #include <signal.h>
-
+#include <sys/types.h>
 #define MAX_BUF 1024
 
 int main(){
-  FILE* file = fopen("output.txt","w");
+    FILE* file = fopen("output.txt","w");
+    struct sockaddr_in server,incoming;
 
-  struct sockaddr_in local,incoming;
-  inet_aton("127.0.0.1",&local.sin_addr);
-  local.sin_port=htons(3000);
-  local.sin_family=AF_INET;
-  int s= socket(AF_INET,SOCK_STREAM,0);
-  bind(s,(struct sockaddr*) &local, sizeof(local));
-  listen(s,5);
-  socklen_t in_len = sizeof(incoming);
+    //Create socket
+    int sock = socket(AF_INET,SOCK_STREAM,0);
+    if (sock == -1){
+        printf("Could not create socket");
+    }
+    printf("Socket created");
 
-  int	cs=accept(s, (struct sockaddr*)&incoming, &in_len);
-  int pid = getpid();
-  write(cs, &pid, sizeof(int));
+    //Prepare the sockaddr_in structure
+    server.sin_port=htons(8888);
+    server.sin_addr.s_addr = INADDR_ANY;
+    server.sin_family=AF_INET;
+    
+    //Bind
+    if( bind(sock,(struct sockaddr *)&server , sizeof(server)) < 0){
+        print the error message
+        perror("bind failed. Error");
+        return 1;
+    }
+    printf("bind done");
 
-  while(1){
-    char buf[MAX_BUF];
-    read(cs,buf,MAX_BUF);
-    fprintf(file,"%s\n",buf);
-    close(cs);
+    //Listen
+    listen(sock,5);
+
+    //Accept and incoming connection	
+    printf("Waiting for incoming connections...\n");
+    int c = sizeof(incoming);
+
+    //accept connection from an incoming client
+    while(1){
+        //printf("Entered the cycle\n");
+        int client_sock=accept(sock, (struct sockaddr*)&incoming, (socklen_t*)&c);
+        if (client_sock < 0){
+            perror("accept failed");
+            return 1;
+        }
+        printf("Connection accepted\n");
+
+        //Receive a message from client
+        char buf[MAX_BUF];
+        read(client_sock,buf,MAX_BUF);
+        //int bytes_read = recv(client_sock,buf,2048,0);
+        printf("got message: %s\n",buf);
+        printf("printed in output symbols: %d\n",fputs(buf,file));
+        fclose(file);
+        close(cs);
   }
 
   return 0;
