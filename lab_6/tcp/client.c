@@ -31,9 +31,9 @@ int main(int argc, char* argv[]){
     //Create socket
     int sock = socket(AF_INET,SOCK_STREAM,0);
     if (sock == -1){
-        printf("Could not create socket");
+        printf("Could not create socket\n");
     }
-    printf("Socket created");
+    printf("Socket created\n");
 
     local.sin_addr.s_addr = inet_addr("127.0.0.1");
     local.sin_port=htons(8888);
@@ -41,7 +41,7 @@ int main(int argc, char* argv[]){
 
     //Connect to remote server
     if (connect(sock , (struct sockaddr *)&local , sizeof(local)) < 0){
-        perror("connect failed. Error");
+        perror("connect failed. Error\n");
         return 1;
     }
 
@@ -60,7 +60,7 @@ int main(int argc, char* argv[]){
     sleep(2);
     
     kill(pid,SIGTERM);
-    printf("Target is  killed, my job here is done");
+    printf("Target is  killed, my job here is done\n");
     close(sock);
 
     return 0;
