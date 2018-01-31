@@ -40,7 +40,7 @@ int main(int argc, char* argv[]){
     local.sin_family = AF_INET;
 
     //Connect to remote server
-    if (connect(sock , (struct sockaddr *)&server , sizeof(server)) < 0){
+    if (connect(sock , (struct sockaddr *)&local , sizeof(local)) < 0){
         perror("connect failed. Error");
         return 1;
     }
@@ -51,7 +51,7 @@ int main(int argc, char* argv[]){
     strcpy(message, argv[1]);
     strcat(message, " ");
     strcat(message, inet_ntoa(*tmp));
-    printf("Sending %d symbols to the server \n",write(sock, message, strlen(buf)+1));  //convert to human readable format
+    printf("Sending %d symbols to the server \n",write(sock, message, strlen(message)+1));  //convert to human readable format
     //send(sock, message, sizeof(buf),0);
 
     int pid = atoi(argv[2]);
@@ -61,7 +61,7 @@ int main(int argc, char* argv[]){
     
     kill(pid,SIGTERM);
     printf("Target is  killed, my job here is done");
-    close(s);
+    close(sock);
 
     return 0;
 }
