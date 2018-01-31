@@ -26,7 +26,7 @@ int main(){
     
     //Bind
     if( bind(sock,(struct sockaddr *)&server , sizeof(server)) < 0){
-        print the error message
+        //print the error message
         perror("bind failed. Error");
         return 1;
     }
@@ -56,7 +56,7 @@ int main(){
         printf("got message: %s\n",buf);
         printf("printed in output symbols: %d\n",fputs(buf,file));
         fclose(file);
-        close(cs);
+        close(client_sock);
   }
 
   return 0;
