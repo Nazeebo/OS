@@ -27,10 +27,10 @@ int main(){
     //Bind
     if( bind(sock,(struct sockaddr *)&server , sizeof(server)) < 0){
         //print the error message
-        perror("bind failed. Error\n");
+        perror("Bind failed. Error\n");
         return 1;
     }
-    printf("bind done\n");
+    printf("Bind is done\n");
 
     //Listen
     listen(sock,5);
@@ -44,7 +44,7 @@ int main(){
         //printf("Entered the cycle\n");
         int client_sock=accept(sock, (struct sockaddr*)&incoming, (socklen_t*)&c);
         if (client_sock < 0){
-            perror("accept failed");
+            perror("Accept failed");
             return 1;
         }
         printf("Connection accepted\n");
@@ -53,8 +53,9 @@ int main(){
         char buf[MAX_BUF];
         read(client_sock,buf,MAX_BUF);
         //int bytes_read = recv(client_sock,buf,2048,0);
-        printf("got message: %s\n",buf);
-        printf("printed in output symbols: %d\n",fputs(buf,file));
+        printf("Got message: %s\n",buf);
+        printf("Printed in output the message);
+        fputs(buf,file);
         fclose(file);
         close(client_sock);
   }
