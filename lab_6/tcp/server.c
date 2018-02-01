@@ -15,9 +15,9 @@ int main(){
     //Create socket
     int sock = socket(AF_INET,SOCK_STREAM,0);
     if (sock == -1){
-        printf("Could not create socket");
+        printf("Could not create socket\n");
     }
-    printf("Socket created");
+    printf("Socket created\n");
 
     //Prepare the sockaddr_in structure
     server.sin_port=htons(8888);
@@ -27,10 +27,10 @@ int main(){
     //Bind
     if( bind(sock,(struct sockaddr *)&server , sizeof(server)) < 0){
         //print the error message
-        perror("bind failed. Error");
+        perror("bind failed. Error\n");
         return 1;
     }
-    printf("bind done");
+    printf("bind done\n");
 
     //Listen
     listen(sock,5);
