@@ -54,7 +54,7 @@ int main(){
         read(client_sock,buf,MAX_BUF);
         //int bytes_read = recv(client_sock,buf,2048,0);
         printf("Got message: %s\n",buf);
-        printf("Printed in output the message);
+        printf("Printed in output the message");
         fputs(buf,file);
         fclose(file);
         close(client_sock);
